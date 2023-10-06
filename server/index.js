@@ -41,6 +41,11 @@ app.post('/food', (req, res) => {
     res.status(200).send(foods)
 })
 
+app.post('/clear', (req, res) => {
+    foods = []
+    res.status(200).send(foods)
+})
+
 app.listen(port, () => {
   console.log(`Lab server listening at http://localhost:${port}`)
 })

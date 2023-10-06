@@ -194,7 +194,8 @@ document.getElementById('query-button').addEventListener('click', queryTest)
     Then you'll attach that function to the submit event on the form. We'll be creating a list of foods. 
 
     In the index.html file inside of the client folder, create a form with one text input field and a button. 
-    The input field should have a placeholder that tells the user to enter a food. And the button should indicate that it will add food into a list. 
+    The input field should have a placeholder that tells the user to enter a food. 
+    And the button should indicate that it will add food into a list. 
 
     In this file (script.js), create a function called createFood. 
     
@@ -211,3 +212,31 @@ document.getElementById('query-button').addEventListener('click', queryTest)
 */
 
 // CODE HERE 
+
+function createFood(){
+    console.log('clicked')
+    let foodInput = document.getElementById('food-input')
+    let body = {
+        newFood: foodInput.value
+    }
+    console.log(body)
+
+    axios.post('http://localhost:3000/food', body).then((res) => {
+        document.getElementById('food-display').textContent = res.data
+        document.getElementById('food-display').style.display = 'block'
+        foodInput.value = ''    
+
+    })
+}
+document.getElementById('food-button').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    createFood(); // Call the createFood function
+})
+
+function deleteFood(event){
+    axios.post('http://localhost:3000/clear').then((res) => {
+        console.log(res.data)
+    })
+    document.getElementById('food-display').textContent = "cleared"
+}
+document.getElementById('clear-button').addEventListener('click', deleteFood)
