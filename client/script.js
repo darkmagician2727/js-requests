@@ -10,7 +10,7 @@
 */
 
 // CODE HERE
-
+let sayHelloButton = document.querySelector('#say-hello-button')
 
 // PROBLEM 2
 /*
@@ -20,7 +20,12 @@
 */
 
 // CODE HERE
+function changeColor(){
+    sayHelloButton.style.backgroundColor = 'black'
+    sayHelloButton.style.color = 'white'
+}
 
+sayHelloButton.addEventListener('mouseover', changeColor)
 
 // PROBLEM 3
 /*
@@ -33,7 +38,12 @@
 
 // CODE HERE
 
+function changeBack(){
+    sayHelloButton.style.backgroundColor = '#EFEFEF'
+    sayHelloButton.style.color = 'black'
+}
 
+sayHelloButton.addEventListener('mouseout', changeBack)
 // PROBLEM 4
 /*
     Now lets see if we can make a request to our server when we click the button
@@ -54,6 +64,7 @@ const sayHello = () => {
 
 // CODE HERE
 
+sayHelloButton.addEventListener('click', sayHello)
 
 // PROBLEM 5 
 /*
@@ -63,19 +74,32 @@ const sayHello = () => {
     
     Use axios inside the ohMy function to make a GET request to 'http://localhost:3000/animals' 
     
-    Handle the promise that's returned with a .then, which you should pass a callback function to. Inside the callback function, console.log the response's data (in the intermediate instructions we'll come back to this function and add HTML).
+    Handle the promise that's returned with a .then, which you should pass a callback function to. 
+    Inside the callback function, console.log the response's data (in the intermediate instructions we'll come back to this function and add HTML).
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals').then((answer) => {
+        for (let i = 0; i < answer.data.length; i++) {
+            // let p = document.createElement('p')
+            // p.textContent = answer.data[i]
+            // document.body.appendChild(p)
+
+            // this one is wrong and me trial and error document.body.appendChild((document.createElement('p').textContent = answer.data[i]))
+
+            document.body.appendChild(document.createElement('p')).textContent = answer.data[i]
+        }
+    })
 }
+
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
 
 
 // PROBLEM 6 
 /*
-    Now lets see if you can send a request param! inside repeatMyParam function below  make get request to 'http://localhost:3000/repeat/{SOMEPARAM}', but with a string instead of {SOMEPARAM}.  
+    Now lets see if you can send a request param! inside repeatMyParam function below  
+    make get request to 'http://localhost:3000/repeat/{SOMEPARAM}', but with a string instead of {SOMEPARAM}.  
 
     The function that runs when this request is made will return whatever parameter you sent 
 
@@ -87,8 +111,16 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
 */
 
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    axios.get(`http://localhost:3000/repeat/test`).then((answer) => {
+        console.log(answer.data)  
+        document.getElementById('repeat-text').textContent = answer.data  
+        document.getElementById('repeat-text').style.display = 'block'    
+    })
+    
+    
 }
+
+document.getElementById('repeat-button').addEventListener('click', repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -114,7 +146,13 @@ const repeatMyParam = () => {
 
 // CODE HERE
 
+function queryTest(){
+    axios.get('http://localhost:3000/query-test?signal=on&radio=playing').then((answer) => {
+        console.log(answer.data)
+    })
+}
 
+document.getElementById('query-button').addEventListener('click', queryTest)
 
 ////////////////
 //INTERMEDIATE//
@@ -135,7 +173,11 @@ const repeatMyParam = () => {
 
     1: Send no queries on the URL -- what happened? 
 
+    sent an empty query
+
     2: Send more than 1 query on the URL -- what happened? 
+
+    sent 2 queries and got a message saying I sent more than 1
 */
 
 // Edit code in Problem 8
@@ -148,15 +190,18 @@ const repeatMyParam = () => {
 
 //PROBLEM 11
 /*
-    You are going to add the ability to POST to the server. You'll need to create a small form and write a function that makes a post request. Then you'll attach that function to the submit event on the form. We'll be creating a list of foods. 
+    You are going to add the ability to POST to the server. You'll need to create a small form and write a function that makes a post request. 
+    Then you'll attach that function to the submit event on the form. We'll be creating a list of foods. 
 
-    In the index.html file inside of the client folder, create a form with one text input field and a button. The input field should have a placeholder that tells the user to enter a food. And the button should indicate that it will add food into a list. 
+    In the index.html file inside of the client folder, create a form with one text input field and a button. 
+    The input field should have a placeholder that tells the user to enter a food. And the button should indicate that it will add food into a list. 
 
     In this file (script.js), create a function called createFood. 
     
     Inside the function, select the input you just created in the HTML and save it to a variable called foodInput. 
     
-    Next, create an object called body inside the function. It should have one key-value pair. The key should be newFood (make sure to match the case and spelling exactly) and the value should be the value of the food input. 
+    Next, create an object called body inside the function. It should have one key-value pair. 
+    The key should be newFood (make sure to match the case and spelling exactly) and the value should be the value of the food input. 
 
     Now make an axios post request to /food. Inside the parentheses where you passed the URL in, pass in body as the second argument. 
 
