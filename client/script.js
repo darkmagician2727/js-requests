@@ -214,12 +214,12 @@ document.getElementById('query-button').addEventListener('click', queryTest)
 // CODE HERE 
 
 function createFood(){
-    console.log('clicked')
+    //console.log('clicked')
     let foodInput = document.getElementById('food-input')
     let body = {
         newFood: foodInput.value
     }
-    console.log(body)
+    //console.log(body)
 
     axios.post('http://localhost:3000/food', body).then((res) => {
         document.getElementById('food-display').textContent = res.data
@@ -245,11 +245,11 @@ function showFood(){
     axios.post('http://localhost:3000/show').then((res) => {
         console.log(res.data)
         if(res.data.length === 0){
-            console.log("null")
+            //console.log("null")
             document.getElementById('food-display').textContent = "no food"
         }
         else{
-        console.log("not null")
+        //console.log("not null")
         document.getElementById('food-display').textContent = res.data
         }
     })
