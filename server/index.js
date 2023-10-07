@@ -46,6 +46,10 @@ app.post('/clear', (req, res) => {
     res.status(200).send(foods)
 })
 
+app.post('/show', (req, res) => {
+    res.status(200).send(foods)
+})
+
 app.listen(port, () => {
   console.log(`Lab server listening at http://localhost:${port}`)
 })

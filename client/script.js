@@ -223,7 +223,6 @@ function createFood(){
 
     axios.post('http://localhost:3000/food', body).then((res) => {
         document.getElementById('food-display').textContent = res.data
-        document.getElementById('food-display').style.display = 'block'
         foodInput.value = ''    
 
     })
@@ -238,5 +237,22 @@ function deleteFood(event){
         console.log(res.data)
     })
     document.getElementById('food-display').textContent = "cleared"
+
 }
 document.getElementById('clear-button').addEventListener('click', deleteFood)
+
+function showFood(){
+    axios.post('http://localhost:3000/show').then((res) => {
+        console.log(res.data)
+        if(res.data.length === 0){
+            console.log("null")
+            document.getElementById('food-display').textContent = "no food"
+        }
+        else{
+        console.log("not null")
+        document.getElementById('food-display').textContent = res.data
+        }
+    })
+    
+}
+document.getElementById('show-food').addEventListener('click', showFood)
